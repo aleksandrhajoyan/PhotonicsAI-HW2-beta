@@ -1,0 +1,64 @@
+Data: excerpt=[42650:46746], samples=4096, train=3072, test=1024, fs=610.35 Hz, dt=0.001638404194 s
+Training-only RMS scales: sy=0.05302076 V, sv=1.419384 V/s, su=0.02195977 V, sa=37.9974 V/s^2
+Smoothed-derivative physical Duffing LS start (a,b,c,g)=(1.683437, 8984.894, 1570275, 450.9989)
+Initial Duffing candidate: continuous training RMSE=0.064652556 V
+WARM length=128 update=5/18 loss=2.250704 elapsed=3.0s
+WARM length=128 update=10/18 loss=2.198107 elapsed=4.1s
+WARM length=128 update=15/18 loss=1.120251 elapsed=5.2s
+WARM length=128 update=18/18 loss=1.067406 elapsed=6.1s
+Candidate Duffing warm-fit length=128: continuous training free-run RMSE=0.064367821 V
+Selected new training-only best: 0.064367821 V
+WARM length=512 update=5/14 loss=1.247092 elapsed=12.5s
+WARM length=512 update=10/14 loss=1.540089 elapsed=18.4s
+WARM length=512 update=14/14 loss=1.557591 elapsed=23.2s
+Candidate Duffing warm-fit length=512: continuous training free-run RMSE=0.064282777 V
+Selected new training-only best: 0.064282777 V
+WARM length=1024 update=5/8 loss=1.053643 elapsed=37.5s
+WARM length=1024 update=8/8 loss=1.441572 elapsed=43.8s
+Candidate Duffing warm-fit length=1024: continuous training free-run RMSE=0.064262326 V
+Selected new training-only best: 0.064262326 V
+RESIDUAL length=64 update=4/18 loss=2.01164 elapsed=46.1s
+RESIDUAL length=64 update=8/18 loss=1.240717 elapsed=46.6s
+RESIDUAL length=64 update=12/18 loss=2.125402 elapsed=47.1s
+RESIDUAL length=64 update=16/18 loss=1.830184 elapsed=47.6s
+RESIDUAL length=64 update=18/18 loss=2.695682 elapsed=47.8s
+Candidate residual length=64: continuous training free-run RMSE=0.061112848 V
+Selected new training-only best: 0.061112848 V
+RESIDUAL length=256 update=4/14 loss=1.073373 elapsed=52.1s
+RESIDUAL length=256 update=8/14 loss=1.397658 elapsed=54.1s
+RESIDUAL length=256 update=12/14 loss=1.177414 elapsed=56.4s
+RESIDUAL length=256 update=14/14 loss=1.643489 elapsed=57.6s
+Candidate residual length=256: continuous training free-run RMSE=0.058839819 V
+Selected new training-only best: 0.058839819 V
+RESIDUAL length=512 update=4/10 loss=1.251028 elapsed=63.5s
+RESIDUAL length=512 update=8/10 loss=0.9956298 elapsed=67.6s
+RESIDUAL length=512 update=10/10 loss=1.46512 elapsed=70.0s
+Candidate residual length=512: continuous training free-run RMSE=0.058548595 V
+Selected new training-only best: 0.058548595 V
+RESIDUAL length=1024 update=4/7 loss=0.9748801 elapsed=80.4s
+RESIDUAL length=1024 update=7/7 loss=0.9552537 elapsed=88.1s
+Candidate residual length=1024: continuous training free-run RMSE=0.05851848 V
+Selected new training-only best: 0.05851848 V
+RESIDUAL length=2048 update=4/4 loss=0.9446487 elapsed=110.0s
+Candidate residual length=2048: continuous training free-run RMSE=0.058498193 V
+Selected new training-only best: 0.058498193 V
+CONTINUOUS update=1/4 loss=1.295878 elapsed=119.1s
+Candidate continuous update=1: continuous training free-run RMSE=0.058492678 V
+Selected new training-only best: 0.058492678 V
+CONTINUOUS update=2/4 loss=1.295531 elapsed=128.3s
+Candidate continuous update=2: continuous training free-run RMSE=0.058486621 V
+Selected new training-only best: 0.058486621 V
+CONTINUOUS update=3/4 loss=1.295158 elapsed=138.4s
+Candidate continuous update=3: continuous training free-run RMSE=0.058479986 V
+Selected new training-only best: 0.058479986 V
+CONTINUOUS update=4/4 loss=1.294758 elapsed=147.0s
+Candidate continuous update=4: continuous training free-run RMSE=0.05847274 V
+Selected new training-only best: 0.05847274 V
+Selected checkpoint by continuous training-only free run: RMSE=0.05847274015 V
+Training budget: Duffing rollout updates=40, residual rollout updates=53, continuous rollout updates=4
+Model: normalized Duffing acceleration plus zero-initialized residual 2-hidden-layer, 32-unit tanh MLP; trainable positive damping and linear stiffness; AdamW with gradient clipping; classical RK4, ZOH input.
+TRAIN_RMSE=0.05847274015
+TEST_RMSE=0.06052074549
+Saved freerun_states.npy, freerun_prediction.npy, final_accel.pt, boundary_state.json, and test_measured_vs_predicted.png
+EXIT_CODE=0
+ERRORS=none

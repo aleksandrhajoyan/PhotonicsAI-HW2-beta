@@ -1,0 +1,44 @@
+Data/alignment: exact excerpt=[42650:46746], n=4096, train=[0:3072], test=[3072:4096], fs=610.35 Hz, dt=0.00163840419431 s; prediction index k matches measured k.
+Centered signal checks: u_train RMS=0.02195977 V, y_train RMS=0.053020761 V, u_test RMS=0.023422212 V, y_test RMS=0.060491854 V
+Zero-predictor RMSE: train=0.05302076107 V, test=0.06049185441 V
+Training-only ARX diagnostic (recursive RMSE; one-step RMSE):
+  input lag=0: recursive=0.0058348148 V, one-step=0.00089524158 V, ridge=0.01
+  input lag=1: recursive=0.0062184975 V, one-step=0.00096941282 V, ridge=0.0001
+  input lag=2: recursive=0.031543196 V, one-step=0.0069960249 V, ridge=1e-08
+Best ARX diagnostic: input lag=0, recursive training RMSE=0.005834814772 V; diagnostic only, not used for test fitting.
+Training-only scales: sy=0.053020761 V, sv=1.419384 V/s, su=0.02195977 V, sa=37.997396 V/s^2
+Derivative supervision: Savitzky-Golay window=31, polynomial=3, interior valid indices [15:3057]
+Normalized Duffing derivative-fit initialization (d,k,q,r)=(0.03055596, 12.6342, 5.640492, 0.2871276)
+Initial candidate continuous training RMSE=inf V
+DERIVATIVE update=60/240 loss=1033.855 elapsed=2.4s
+DERIVATIVE update=120/240 loss=915.0304 elapsed=2.5s
+DERIVATIVE update=180/240 loss=715.6784 elapsed=2.5s
+DERIVATIVE update=240/240 loss=881.5605 elapsed=2.6s
+Checkpoint derivative-supervised: continuous train RMSE=inf V
+ROLLOUT length=32 update=4/20 loss=506.7296 elapsed=3.9s
+ROLLOUT length=32 update=8/20 loss=570.3899 elapsed=4.0s
+ROLLOUT length=32 update=12/20 loss=664.7604 elapsed=4.2s
+ROLLOUT length=32 update=16/20 loss=497.7041 elapsed=4.4s
+ROLLOUT length=32 update=20/20 loss=417.7756 elapsed=4.5s
+Checkpoint staged rollout length=32: continuous train RMSE=inf V
+ROLLOUT length=128 update=4/12 loss=231.8938 elapsed=6.4s
+ROLLOUT length=128 update=8/12 loss=105.344 elapsed=7.2s
+ROLLOUT length=128 update=12/12 loss=216.6843 elapsed=7.9s
+Checkpoint staged rollout length=128: continuous train RMSE=inf V
+ROLLOUT length=512 update=4/6 loss=102.372 elapsed=12.3s
+ROLLOUT length=512 update=6/6 loss=174.5181 elapsed=14.2s
+Checkpoint staged rollout length=512: continuous train RMSE=inf V
+CONTINUOUS update=1/2 loss=25.88631 elapsed=21.2s
+Checkpoint continuous update=1: continuous train RMSE=inf V
+CONTINUOUS update=2/2 loss=25.88426 elapsed=28.7s
+Checkpoint continuous update=2: continuous train RMSE=inf V
+Selected using continuous training-only free run: RMSE=inf V; train zero baseline=0.05302076107 V
+Model: state=(y,v), y_dot=v, v_dot=sa[-dV-kY-qY^3+rU+f_theta(Y,V,U)]; normalized Duffing acceleration plus 2-hidden-layer, 16-unit tanh MLP, zero-initialized residual output; positive trainable damping/stiffness.
+Training: training-only Savitzky-Golay acceleration supervision, staged RK4 rollout lengths 32/128/512, then continuous training rollout; AdamW, derivative lr=3e-4, weight decay=1e-5, gradient clip=0.5; updates=240 derivative, 38 staged, 2 continuous.
+Scaling: sy=0.053020761, sv=1.419384, su=0.02195977, sa=37.997396; float32 model evaluation, RK4 ZOH input.
+TRAIN_RMSE=nan
+TEST_RMSE=nan
+EXIT_CODE=0
+ERRORS=none
+Saved training_signals.png, ARX diagnostic, training free-run diagnostics when improved, test_measured_vs_predicted.png, freerun_states.npy, freerun_prediction.npy, final_accel.pt, and boundary_state.json.
+TOTAL_RUNTIME_SECONDS=31.745

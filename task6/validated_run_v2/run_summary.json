@@ -1,0 +1,143 @@
+{
+  "model": "gpt-6-luna",
+  "data": "SilverboxFiles/SNLS80mV.mat",
+  "turn_sequence": [
+    "user",
+    "orchestrator",
+    "scientist",
+    "orchestrator",
+    "executor",
+    "orchestrator",
+    "scientist",
+    "orchestrator",
+    "executor",
+    "orchestrator",
+    "scientist",
+    "orchestrator",
+    "executor",
+    "orchestrator",
+    "executor",
+    "orchestrator"
+  ],
+  "orchestrator_decisions": [
+    "scientist",
+    "executor",
+    "scientist",
+    "executor",
+    "scientist",
+    "executor",
+    "executor",
+    "finish"
+  ],
+  "num_orchestrator_decisions": 8,
+  "executor_runs": [
+    {
+      "file": "task6/validated_run_v2/silverbox_agent_attempt_01/silverbox_agent_attempt_01.py",
+      "relpath": "silverbox_agent_attempt_01/silverbox_agent_attempt_01.py",
+      "timed_out": false,
+      "exit_code": 0,
+      "elapsed_s": 40.8,
+      "traceback": "",
+      "train_rmse": 0.05646572659,
+      "test_rmse": 0.06048733984
+    },
+    {
+      "file": "task6/validated_run_v2/silverbox_agent_attempt_02/silverbox_agent_attempt_02.py",
+      "relpath": "silverbox_agent_attempt_02/silverbox_agent_attempt_02.py",
+      "timed_out": false,
+      "exit_code": 0,
+      "elapsed_s": 154.9,
+      "traceback": "",
+      "train_rmse": 0.05847274015,
+      "test_rmse": 0.06052074549
+    },
+    {
+      "file": "task6/validated_run_v2/silverbox_agent_attempt_03/silverbox_agent_attempt_03.py",
+      "relpath": "silverbox_agent_attempt_03/silverbox_agent_attempt_03.py",
+      "timed_out": false,
+      "exit_code": 0,
+      "elapsed_s": 36.6,
+      "traceback": "",
+      "train_rmse": null,
+      "test_rmse": null
+    },
+    {
+      "file": "task6/validated_run_v2/silverbox_agent_attempt_04/silverbox_agent_attempt_04.py",
+      "relpath": "silverbox_agent_attempt_04/silverbox_agent_attempt_04.py",
+      "timed_out": false,
+      "exit_code": 0,
+      "elapsed_s": 24.9,
+      "traceback": "",
+      "train_rmse": null,
+      "test_rmse": null
+    }
+  ],
+  "successful_test_rmse_by_attempt": {
+    "silverbox_agent_attempt_01/silverbox_agent_attempt_01.py": 0.06048733984,
+    "silverbox_agent_attempt_02/silverbox_agent_attempt_02.py": 0.06052074549
+  },
+  "quality_target_test_rmse": 0.02,
+  "kept_attempt_rule": "successful attempt with the lowest complete free-run TEST_RMSE",
+  "final_script": "silverbox_agent_attempt_01/silverbox_agent_attempt_01.py",
+  "final_exit_code": 0,
+  "TRAIN_RMSE": 0.05646572659,
+  "TEST_RMSE": 0.06048733984,
+  "boundary_state_reported_by_script": {
+    "k_3071": [
+      -0.0005815390440773233,
+      -0.03258465761684641
+    ],
+    "k_3072": [
+      -0.0006517460607862701,
+      -0.052791128616245506
+    ],
+    "state_initialisations": 1,
+    "rk4_steps": 4095,
+    "rk4_u_convention": "zoh"
+  },
+  "verification": {
+    "passed": true,
+    "checks": {
+      "A_rmse_provenance": true,
+      "B_continuous_u_only_rollout": true,
+      "C_free_run_source_audit": true,
+      "D_test_y_mutation": true
+    },
+    "rk4_steps_replayed_from_u_only": 4095,
+    "steps_failing": 0,
+    "boundary": {
+      "state_k3071_saved": [
+        -0.0005815390440773233,
+        -0.03258465761684641
+      ],
+      "state_k3072_saved": [
+        -0.0006517460607862701,
+        -0.052791128616245506
+      ],
+      "state_k3072_recomputed_from_k3071_and_u_only": [
+        -0.0006517460569739342,
+        -0.05279112607240677
+      ],
+      "boundary_step_err_y_V": 3.812335972082359e-12,
+      "boundary_step_err_v_Vps": 2.5438387368792448e-09,
+      "measured_y_3072_for_comparison": -0.07843461661252132,
+      "script_reported": {
+        "k_3071": [
+          -0.0005815390440773233,
+          -0.03258465761684641
+        ],
+        "k_3072": [
+          -0.0006517460607862701,
+          -0.052791128616245506
+        ],
+        "state_initialisations": 1,
+        "rk4_steps": 4095,
+        "rk4_u_convention": "zoh"
+      }
+    },
+    "free_run_signature": "free_run(accel, u, y0, v0)",
+    "free_run_num_loops": 1,
+    "free_run_boundary_branches": [],
+    "details": "verification.json"
+  }
+}

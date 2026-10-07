@@ -1,0 +1,196 @@
+{
+  "script": "silverbox_agent_attempt_01.py",
+  "data": "SilverboxFiles/SNLS80mV.mat",
+  "A_rmse_provenance": {
+    "printed_TRAIN_RMSE": 0.05250201921,
+    "printed_TEST_RMSE": 0.05948953519,
+    "recomputed_TRAIN_RMSE": 0.05250201920967834,
+    "recomputed_TEST_RMSE": 0.059489535187760643,
+    "passed": true
+  },
+  "B_continuous_u_only_rollout": {
+    "states_shape": [
+      4096,
+      2
+    ],
+    "prediction_equals_states_y": true,
+    "model_dtype": "torch.float32",
+    "declared_u_convention": "zoh",
+    "u_convention_matched": "zoh",
+    "per_convention": {
+      "linear": {
+        "max_step_err_y_V": 0.0008860714632911429,
+        "max_step_err_v_Vps": 1.4336024580569402,
+        "boundary_step_err_y_V": 0.0006507596092295185,
+        "boundary_step_err_v_Vps": 1.0206149106177798,
+        "steps_failing": 4070,
+        "y_next_3072": -0.0011680854950100183,
+        "v_next_3072": -0.812536895275116
+      },
+      "zoh": {
+        "max_step_err_y_V": 4.24900592488342e-09,
+        "max_step_err_v_Vps": 8.770880413067061e-07,
+        "boundary_step_err_y_V": 5.5692745771010466e-11,
+        "boundary_step_err_v_Vps": 1.1428881618869013e-08,
+        "steps_failing": 0,
+        "y_next_3072": -0.001818845048546791,
+        "v_next_3072": -1.8331518173217773
+      }
+    },
+    "rk4_steps_checked": 4095,
+    "steps_failing": 0,
+    "initial_state": {
+      "y0": 0.07192429094857015,
+      "v0": -21.18979319998271
+    },
+    "y0_equals_measured_y0": true,
+    "v0_finite_difference_candidates": {
+      "forward (y1-y0)/dt": -21.18979319998271,
+      "2nd-order one-sided (-3y0+4y1-y2)/(2dt)": -13.62721843243841
+    },
+    "v0_matches_finite_difference": [
+      "forward (y1-y0)/dt"
+    ],
+    "boundary": {
+      "state_k3071_saved": [
+        0.001208229234260206,
+        -1.714533057437233
+      ],
+      "state_k3072_saved": [
+        -0.0018188451042395368,
+        -1.8331518058928957
+      ],
+      "state_k3072_recomputed_from_k3071_and_u_only": [
+        -0.001818845048546791,
+        -1.8331518173217773
+      ],
+      "boundary_step_err_y_V": 5.5692745771010466e-11,
+      "boundary_step_err_v_Vps": 1.1428881618869013e-08,
+      "measured_y_3072_for_comparison": -0.07843461661252132,
+      "script_reported": {
+        "k_3071": [
+          0.001208229234260206,
+          -1.714533057437233
+        ],
+        "k_3072": [
+          -0.0018188451042395368,
+          -1.8331518058928957
+        ],
+        "state_initialisations": 1,
+        "rk4_steps": 4095,
+        "rk4_u_convention": "zoh"
+      }
+    },
+    "passed": true
+  },
+  "C_free_run_source_audit": {
+    "free_run_found": true,
+    "signature": "free_run(accel, u, y0, v0)",
+    "free_run_source": "def free_run(accel, u, y0, v0):\n    \"\"\"One full free run; input is zero-order held over each RK4 interval.\"\"\"\n    y_state, v_state = float(y0), float(v0)\n    states = np.empty((len(u), 2), dtype=np.float64)\n    states[0, 0] = y_state\n    states[0, 1] = v_state\n\n    def acceleration(y_value, v_value, u_value):\n        yy = torch.tensor([y_value], dtype=torch.float32, device=DEVICE)\n        vv = torch.tensor([v_value], dtype=torch.float32, device=DEVICE)\n        uu = torch.tensor([u_value], dtype=torch.float32, device=DEVICE)\n        with torch.no_grad():\n            return float(accel(yy, vv, uu).reshape(-1)[0].item())\n\n    for k in range(len(u) - 1):\n        uk = float(u[k])\n\n        k1_y = v_state\n        k1_v = acceleration(y_state, v_state, uk)\n\n        k2_y = v_state + 0.5 * DT * k1_v\n        k2_v = acceleration(\n            y_state + 0.5 * DT * k1_y,\n            v_state + 0.5 * DT * k1_v,\n            uk,\n        )\n\n        k3_y = v_state + 0.5 * DT * k2_v\n        k3_v = acceleration(\n            y_state + 0.5 * DT * k2_y,\n            v_state + 0.5 * DT * k2_v,\n            uk,\n        )\n\n        k4_y = v_state + DT * k3_v\n        k4_v = acceleration(\n            y_state + DT * k3_y,\n            v_state + DT * k3_v,\n            uk,\n        )\n\n        y_state, v_state = (\n            y_state + (DT / 6.0) * (k1_y + 2.0 * k2_y + 2.0 * k3_y + k4_y),\n            v_state + (DT / 6.0) * (k1_v + 2.0 * k2_v + 2.0 * k3_v + k4_v),\n        )\n        states[k + 1, 0] = y_state\n        states[k + 1, 1] = v_state\n\n    return states",
+    "num_loops": 1,
+    "loops": [
+      "for k in range(len(u) - 1):"
+    ],
+    "if_branches": [],
+    "boundary_if_branches": [],
+    "contains_constant_3071_or_3072": false,
+    "assignments_by_name": {
+      "y_state": [
+        167,
+        206
+      ],
+      "v_state": [
+        167,
+        206
+      ],
+      "states": [
+        168,
+        169,
+        170,
+        210,
+        211
+      ],
+      "yy": [
+        173
+      ],
+      "vv": [
+        174
+      ],
+      "uu": [
+        175
+      ],
+      "uk": [
+        180
+      ],
+      "k1_y": [
+        182
+      ],
+      "k1_v": [
+        183
+      ],
+      "k2_y": [
+        185
+      ],
+      "k2_v": [
+        186
+      ],
+      "k3_y": [
+        192
+      ],
+      "k3_v": [
+        193
+      ],
+      "k4_y": [
+        199
+      ],
+      "k4_v": [
+        200
+      ],
+      "k": [
+        210,
+        211
+      ]
+    },
+    "external_names_read": [
+      "DEVICE",
+      "DT",
+      "acceleration",
+      "np",
+      "torch",
+      "u_value",
+      "v_value",
+      "y_value"
+    ],
+    "measured_y_like_names": [],
+    "passed": true
+  },
+  "D_test_y_mutation": {
+    "perturbation": {
+      "max_abs_change_test_y_V": 0.3927584382125019,
+      "max_abs_change_train_y_V": 8.673617379884035e-19
+    },
+    "rerun_original": {
+      "dir": "<TEMP>/verify_original_la22enq0",
+      "exit_code": 0,
+      "TRAIN_RMSE": 0.05250201921,
+      "TEST_RMSE": 0.05948953519,
+      "stderr_tail": "<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1006: FutureWarning: `torch.jit.trace` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1145: FutureWarning: `torch.jit.trace_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n",
+      "max_abs_pred_diff_vs_agent_run_V": 0.0
+    },
+    "rerun_perturbed": {
+      "dir": "<TEMP>/verify_perturbed_gdo29trh",
+      "exit_code": 0,
+      "TRAIN_RMSE": 0.05250201921,
+      "TEST_RMSE": 0.06485483297,
+      "stderr_tail": "<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1006: FutureWarning: `torch.jit.trace` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1145: FutureWarning: `torch.jit.trace_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n"
+    },
+    "script_read_perturbed_file": true,
+    "kept_weights_identical": true,
+    "max_abs_pred_diff_perturbed_vs_original_V": 0.0,
+    "perturbed_run_replay_passed": true,
+    "perturbed_run_replay_steps_failing": 0,
+    "interpretation": "Same kept weights; prediction must be identical although measured test y changed.",
+    "passed": true
+  },
+  "passed": true
+}

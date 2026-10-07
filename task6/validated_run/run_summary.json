@@ -1,0 +1,89 @@
+{
+  "model": "gpt-6-luna",
+  "data": "SilverboxFiles/SNLS80mV.mat",
+  "turn_sequence": [
+    "user",
+    "orchestrator",
+    "scientist",
+    "orchestrator",
+    "executor",
+    "orchestrator"
+  ],
+  "orchestrator_decisions": [
+    "scientist",
+    "executor",
+    "finish"
+  ],
+  "num_orchestrator_decisions": 3,
+  "executor_runs": [
+    {
+      "file": "task6/validated_run/silverbox_agent_attempt_01.py",
+      "timed_out": false,
+      "exit_code": 0,
+      "elapsed_s": 74.3,
+      "traceback": ""
+    }
+  ],
+  "final_script": "silverbox_agent_attempt_01.py",
+  "final_exit_code": 0,
+  "TRAIN_RMSE": 0.05250201921,
+  "TEST_RMSE": 0.05948953519,
+  "boundary_state_reported_by_script": {
+    "k_3071": [
+      0.001208229234260206,
+      -1.714533057437233
+    ],
+    "k_3072": [
+      -0.0018188451042395368,
+      -1.8331518058928957
+    ],
+    "state_initialisations": 1,
+    "rk4_steps": 4095,
+    "rk4_u_convention": "zoh"
+  },
+  "verification": {
+    "passed": true,
+    "checks": {
+      "A_rmse_provenance": true,
+      "B_continuous_u_only_rollout": true,
+      "C_free_run_source_audit": true,
+      "D_test_y_mutation": true
+    },
+    "rk4_steps_replayed_from_u_only": 4095,
+    "steps_failing": 0,
+    "boundary": {
+      "state_k3071_saved": [
+        0.001208229234260206,
+        -1.714533057437233
+      ],
+      "state_k3072_saved": [
+        -0.0018188451042395368,
+        -1.8331518058928957
+      ],
+      "state_k3072_recomputed_from_k3071_and_u_only": [
+        -0.001818845048546791,
+        -1.8331518173217773
+      ],
+      "boundary_step_err_y_V": 5.5692745771010466e-11,
+      "boundary_step_err_v_Vps": 1.1428881618869013e-08,
+      "measured_y_3072_for_comparison": -0.07843461661252132,
+      "script_reported": {
+        "k_3071": [
+          0.001208229234260206,
+          -1.714533057437233
+        ],
+        "k_3072": [
+          -0.0018188451042395368,
+          -1.8331518058928957
+        ],
+        "state_initialisations": 1,
+        "rk4_steps": 4095,
+        "rk4_u_convention": "zoh"
+      }
+    },
+    "free_run_signature": "free_run(accel, u, y0, v0)",
+    "free_run_num_loops": 1,
+    "free_run_boundary_branches": [],
+    "details": "verification.json"
+  }
+}

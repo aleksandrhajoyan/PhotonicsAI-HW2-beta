@@ -1,0 +1,42 @@
+TASK 5 — PINN / neural state-space model for the Silverbox oscillator
+
+The Silverbox public record is SNLS80mV.mat. Channel V1 is the input voltage u(t)
+and channel V2 is the output voltage y(t). The sampling frequency is
+fs = 610.35 Hz, so dt = 1/fs.
+
+Use the 4096 samples in slice [42650:46746]. Subtract the mean of u on this
+excerpt and the mean of y on this excerpt, and use the centered signals afterward.
+The first 3072 samples are the training record and the last 1024 are the test record.
+
+The physical Duffing form is:
+    y_ddot + a y_dot + b y + c y^3 = g u(t).
+
+For the neural model, let v = y_dot and use the state:
+    y_dot = v,
+    v_dot = a_theta(y, v, u),
+where a_theta is a multilayer fully connected PyTorch network. Choose its depth,
+width, activation, scaling, optimizer, learning rate, training steps, and training
+rollout length.
+
+Integrate the state with classical fourth-order Runge-Kutta (RK4) at step dt,
+driven by the measured input u.
+
+FINAL EVALUATION:
+After the architecture weights are fixed, perform one free run of the whole
+4096-sample excerpt. Start at the first sample with the measured y and a
+finite-difference velocity. Integrate through all 3072 training samples and
+continue with the SAME STATE into all 1024 test samples. On the test segment,
+the rollout may read u but may NOT read measured y.
+
+Compute:
+    train RMSE on the 3072 training samples,
+    test RMSE on the 1024 test samples.
+
+The test RMSE is:
+    sqrt((1/1024) * sum((y_hat_i - y_i)^2)).
+
+A zero predictor is about 0.06 V test RMS, so smaller is better.
+
+The solution must report the architecture/hyperparameters, state equation,
+training method, both free-run RMSE values, and save a plot of measured versus
+predicted output on the test segment.

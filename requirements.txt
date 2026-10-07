@@ -1,0 +1,6 @@
+langgraph>=1.0.0
+openai>=2.0.0
+numpy>=1.26
+scipy>=1.11
+torch>=2.2
+matplotlib>=3.8

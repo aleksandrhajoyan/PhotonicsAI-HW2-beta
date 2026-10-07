@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+SNLS80mV.mat
+task6_run/
+task6_runs/
+task5_run/
+*.pt
+SilverboxFiles/
+*.mat
+# Task 6 run evidence is committed; large binary artifacts are not
+task6/validated_run*/**/*.npy

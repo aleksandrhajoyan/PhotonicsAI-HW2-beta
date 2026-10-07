@@ -1,0 +1,28 @@
+Data: excerpt=[42650:46746], train=[0:3072], test=[3072:4096], fs=610.35 Hz, dt=0.00163840419431 s
+Centered RMS: u_train=0.02195977 V, y_train=0.053020761 V, u_test=0.023422212 V, y_test=0.060491854 V
+Zero-predictor RMSE: train=0.05302076107 V, test=0.06049185441 V
+Training-only ARX diagnostic; verified indexing:
+  y[k]=p1*y[k-1]+p2*y[k-2]+q0*u[k]+q1*u[k-1], ridge=1e-08, recursive=0.00589262265 V, one_step=0.000868289848 V
+  y[k]=p1*y[k-1]+p2*y[k-2]+q0*u[k]+q1*u[k-1], ridge=1e-06, recursive=0.00589250065 V, one_step=0.000868289848 V
+  y[k]=p1*y[k-1]+p2*y[k-2]+q0*u[k]+q1*u[k-1], ridge=0.0001, recursive=0.00588042058 V, one_step=0.000868292611 V
+  y[k]=p1*y[k-1]+p2*y[k-2]+q0*u[k]+q1*u[k-1], ridge=0.01, recursive=0.00583481477 V, one_step=0.00089524158 V
+Best recursive training ARX RMSE=0.005834814772 V; diagnostic/initialization only, not used on test.
+Training-only scales: sy=0.053020761 V, sv=1.419384 V/s, su=0.02195977 V, sa=37.997396 V/s^2
+ARX poles -> stable oscillator initialization: damping=42.79426, stiffness=189057.9; normalized (d,k,q,r)=(0.01, 2.018655, -0.05108709, -0.3639648)
+Initial stable continuous training RMSE=inf V
+TRAIN update=1/80 loss=inf continuous_train_RMSE=inf V elapsed=4.7s
+TRAIN update=10/80 loss=inf continuous_train_RMSE=inf V elapsed=6.7s
+TRAIN update=20/80 loss=inf continuous_train_RMSE=inf V elapsed=8.9s
+TRAIN update=30/80 loss=inf continuous_train_RMSE=inf V elapsed=10.6s
+TRAIN update=40/80 loss=inf continuous_train_RMSE=inf V elapsed=12.2s
+TRAIN update=50/80 loss=inf continuous_train_RMSE=inf V elapsed=13.7s
+TRAIN update=60/80 loss=inf continuous_train_RMSE=inf V elapsed=15.5s
+TRAIN update=70/80 loss=inf continuous_train_RMSE=inf V elapsed=17.4s
+TRAIN update=80/80 loss=inf continuous_train_RMSE=inf V elapsed=19.0s
+Selected finite training-only continuous RMSE=inf V (training zero baseline=0.05302076107 V)
+Model: state=(y,v), y_dot=v, v_dot=sa[-d*V-k*Y-q*Y^3+r*U+f_theta(Y,V,U)]; normalized Duffing terms plus a zero-initialized 2-hidden-layer, 16-unit tanh fully connected residual network. Positive damping and stiffness.
+Training: ARX-pole/local-derivative initialization; 80 attempted full training-only RK4 trajectory updates, AdamW lr=2e-5, weight_decay=1e-5, gradient clipping=0.1; double-precision rollout; linear endpoint input interpolation.
+Scaling: sy=0.053020761 V, sv=1.419384 V/s, su=0.02195977 V, sa=37.997396 V/s^2; Savitzky-Golay derivative window=31.
+TRAIN_RMSE=nan
+TEST_RMSE=nan
+TOTAL_RUNTIME_SECONDS=20.616

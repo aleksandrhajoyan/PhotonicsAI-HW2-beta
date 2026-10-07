@@ -1,0 +1,14 @@
+Training 3-64-64-64-1 tanh acceleration MLP; AdamW lr=1e-3, batch=12, rollout curriculum=32/64/96.
+update=1/720 rollout=32 normalized_mse=71.2769 elapsed_s=1.6
+update=120/720 rollout=32 normalized_mse=54.155 elapsed_s=5.9
+update=240/720 rollout=64 normalized_mse=87.8481 elapsed_s=13.8
+update=360/720 rollout=64 normalized_mse=18.5564 elapsed_s=25.1
+update=480/720 rollout=96 normalized_mse=13.7673 elapsed_s=38.0
+update=600/720 rollout=96 normalized_mse=1.54678 elapsed_s=54.8
+update=720/720 rollout=96 normalized_mse=3.24267 elapsed_s=69.0
+State equation: y_dot=v, v_dot=a_theta(y,v,u); RK4 with zero-order-held u.
+Architecture: fully connected 3-64-64-64-1 MLP, tanh hidden activations; training-only RMS scaling; AdamW lr=1e-3, weight_decay=1e-5, 720 updates, rollout curriculum 32/64/96, batch=12.
+TRAIN_RMSE=0.05250201921
+TEST_RMSE=0.05948953519
+Saved plot: silverbox_test_free_run.png
+Total elapsed seconds: 70.5

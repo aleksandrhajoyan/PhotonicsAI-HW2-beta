@@ -1,0 +1,98 @@
+{
+  "slice": [
+    42650,
+    46746
+  ],
+  "train_samples": 3072,
+  "test_samples": 1024,
+  "fs_Hz": 610.35,
+  "dt_s": 0.0016384041943147375,
+  "excerpt_u_mean_V": 0.006657414138317108,
+  "excerpt_y_mean_V": 0.0013167117722332478,
+  "duffing_warm_start": {
+    "a": 41.118710772872056,
+    "b": 184892.61751002647,
+    "c": 754869.9595707811,
+    "g": 195099.8686294322
+  },
+  "runs": [
+    {
+      "name": "2x16_tanh",
+      "hidden": [
+        16,
+        16
+      ],
+      "activation": "tanh",
+      "optimizer": "adam",
+      "pretrain_steps": 600,
+      "pretrain_lr": 0.002,
+      "finetune_steps": 120,
+      "finetune_lr": 0.0002,
+      "rollout_length": 32,
+      "batch_size": 24,
+      "seed": 1,
+      "best_checkpoint_step": 120,
+      "train_rmse_V": 0.004704101011157036,
+      "test_rmse_V": 0.006799987982958555
+    },
+    {
+      "name": "2x32_tanh",
+      "hidden": [
+        32,
+        32
+      ],
+      "activation": "tanh",
+      "optimizer": "adam",
+      "pretrain_steps": 800,
+      "pretrain_lr": 0.002,
+      "finetune_steps": 120,
+      "finetune_lr": 0.00015,
+      "rollout_length": 48,
+      "batch_size": 16,
+      "seed": 2,
+      "best_checkpoint_step": 90,
+      "train_rmse_V": 0.002709239022806287,
+      "test_rmse_V": 0.0029287519864737988
+    },
+    {
+      "name": "3x32_tanh",
+      "hidden": [
+        32,
+        32,
+        32
+      ],
+      "activation": "tanh",
+      "optimizer": "adamw",
+      "pretrain_steps": 1200,
+      "pretrain_lr": 0.0015,
+      "finetune_steps": 150,
+      "finetune_lr": 0.00015,
+      "rollout_length": 48,
+      "batch_size": 16,
+      "seed": 3,
+      "best_checkpoint_step": 150,
+      "train_rmse_V": 0.0019888468086719513,
+      "test_rmse_V": 0.001598878065124154
+    }
+  ],
+  "best": {
+    "name": "3x32_tanh",
+    "hidden": [
+      32,
+      32,
+      32
+    ],
+    "activation": "tanh",
+    "optimizer": "adamw",
+    "pretrain_steps": 1200,
+    "pretrain_lr": 0.0015,
+    "finetune_steps": 150,
+    "finetune_lr": 0.00015,
+    "rollout_length": 48,
+    "batch_size": 16,
+    "seed": 3,
+    "best_checkpoint_step": 150,
+    "train_rmse_V": 0.0019888468086719513,
+    "test_rmse_V": 0.001598878065124154
+  }
+}

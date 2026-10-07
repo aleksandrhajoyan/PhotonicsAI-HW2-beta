@@ -1,0 +1,178 @@
+{
+  "script": "silverbox_agent_attempt_01/silverbox_agent_attempt_01.py",
+  "data": "SilverboxFiles/SNLS80mV.mat",
+  "A_rmse_provenance": {
+    "printed_TRAIN_RMSE": 0.05646572659,
+    "printed_TEST_RMSE": 0.06048733984,
+    "recomputed_TRAIN_RMSE": 0.05646572658899046,
+    "recomputed_TEST_RMSE": 0.06048733984168142,
+    "passed": true
+  },
+  "B_continuous_u_only_rollout": {
+    "states_shape": [
+      4096,
+      2
+    ],
+    "prediction_equals_states_y": true,
+    "model_dtype": "torch.float32",
+    "declared_u_convention": "zoh",
+    "u_convention_matched": "zoh",
+    "per_convention": {
+      "linear": {
+        "max_step_err_y_V": 1.6466909191444382e-05,
+        "max_step_err_v_Vps": 0.029554829723850845,
+        "boundary_step_err_y_V": 1.1248401453219895e-05,
+        "boundary_step_err_v_Vps": 0.020275550644310233,
+        "steps_failing": 3673,
+        "y_next_3072": -0.0006404976593330503,
+        "v_next_3072": -0.03251557797193527
+      },
+      "zoh": {
+        "max_step_err_y_V": 1.1015425488425379e-08,
+        "max_step_err_v_Vps": 1.6042334110011325e-06,
+        "boundary_step_err_y_V": 3.812335972082359e-12,
+        "boundary_step_err_v_Vps": 2.5438387368792448e-09,
+        "steps_failing": 0,
+        "y_next_3072": -0.0006517460569739342,
+        "v_next_3072": -0.05279112607240677
+      }
+    },
+    "rk4_steps_checked": 4095,
+    "steps_failing": 0,
+    "initial_state": {
+      "y0": 0.07192429094857015,
+      "v0": -21.18979319998271
+    },
+    "y0_equals_measured_y0": true,
+    "v0_finite_difference_candidates": {
+      "forward (y1-y0)/dt": -21.18979319998271,
+      "2nd-order one-sided (-3y0+4y1-y2)/(2dt)": -13.62721843243841
+    },
+    "v0_matches_finite_difference": [
+      "forward (y1-y0)/dt"
+    ],
+    "boundary": {
+      "state_k3071_saved": [
+        -0.0005815390440773233,
+        -0.03258465761684641
+      ],
+      "state_k3072_saved": [
+        -0.0006517460607862701,
+        -0.052791128616245506
+      ],
+      "state_k3072_recomputed_from_k3071_and_u_only": [
+        -0.0006517460569739342,
+        -0.05279112607240677
+      ],
+      "boundary_step_err_y_V": 3.812335972082359e-12,
+      "boundary_step_err_v_Vps": 2.5438387368792448e-09,
+      "measured_y_3072_for_comparison": -0.07843461661252132,
+      "script_reported": {
+        "k_3071": [
+          -0.0005815390440773233,
+          -0.03258465761684641
+        ],
+        "k_3072": [
+          -0.0006517460607862701,
+          -0.052791128616245506
+        ],
+        "state_initialisations": 1,
+        "rk4_steps": 4095,
+        "rk4_u_convention": "zoh"
+      }
+    },
+    "passed": true
+  },
+  "C_free_run_source_audit": {
+    "free_run_found": true,
+    "signature": "free_run(accel, u, y0, v0)",
+    "free_run_source": "def free_run(accel, u, y0, v0):\n    \"\"\"One uninterrupted free run; deliberately has no measured-output access.\"\"\"\n    y_state, v_state = (float(y0), float(v0))\n    states = np.empty((len(u), 2), dtype=np.float64)\n    states[0] = (y_state, v_state)\n    for k in range(len(u) - 1):\n        uk = u[k]\n        k1y = v_state\n        k1v = accel(y_state, v_state, uk)\n\n        k2y = v_state + 0.5 * DT * k1v\n        k2v = accel(y_state + 0.5 * DT * k1y, v_state + 0.5 * DT * k1v, uk)\n\n        k3y = v_state + 0.5 * DT * k2v\n        k3v = accel(y_state + 0.5 * DT * k2y, v_state + 0.5 * DT * k2v, uk)\n\n        k4y = v_state + DT * k3v\n        k4v = accel(y_state + DT * k3y, v_state + DT * k3v, uk)\n\n        y_state, v_state = (\n            y_state + (DT / 6.0) * (k1y + 2.0 * k2y + 2.0 * k3y + k4y),\n            v_state + (DT / 6.0) * (k1v + 2.0 * k2v + 2.0 * k3v + k4v),\n        )\n        states[k + 1] = (y_state, v_state)\n    return states",
+    "num_loops": 1,
+    "loops": [
+      "for k in range(len(u) - 1):"
+    ],
+    "if_branches": [],
+    "boundary_if_branches": [],
+    "contains_constant_3071_or_3072": false,
+    "assignments_by_name": {
+      "y_state": [
+        207,
+        224
+      ],
+      "v_state": [
+        207,
+        224
+      ],
+      "states": [
+        208,
+        209,
+        228
+      ],
+      "uk": [
+        211
+      ],
+      "k1y": [
+        212
+      ],
+      "k1v": [
+        213
+      ],
+      "k2y": [
+        215
+      ],
+      "k2v": [
+        216
+      ],
+      "k3y": [
+        218
+      ],
+      "k3v": [
+        219
+      ],
+      "k4y": [
+        221
+      ],
+      "k4v": [
+        222
+      ],
+      "k": [
+        228
+      ]
+    },
+    "external_names_read": [
+      "DT",
+      "np"
+    ],
+    "measured_y_like_names": [],
+    "passed": true
+  },
+  "D_test_y_mutation": {
+    "perturbation": {
+      "max_abs_change_test_y_V": 0.3927584382125019,
+      "max_abs_change_train_y_V": 8.673617379884035e-19
+    },
+    "rerun_original": {
+      "dir": "<TEMP>/verify_original_krih3qdn",
+      "exit_code": 0,
+      "TRAIN_RMSE": 0.05646572659,
+      "TEST_RMSE": 0.06048733984,
+      "stderr_tail": "<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1006: FutureWarning: `torch.jit.trace` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1145: FutureWarning: `torch.jit.trace_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n",
+      "max_abs_pred_diff_vs_agent_run_V": 0.0
+    },
+    "rerun_perturbed": {
+      "dir": "<TEMP>/verify_perturbed_imq1o3h_",
+      "exit_code": 0,
+      "TRAIN_RMSE": 0.05646572659,
+      "TEST_RMSE": 0.06370796655,
+      "stderr_tail": "<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1006: FutureWarning: `torch.jit.trace` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n<PYTHON>\\Lib\\site-packages\\torch\\jit\\_trace.py:1145: FutureWarning: `torch.jit.trace_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n  warnings.warn(\n"
+    },
+    "script_read_perturbed_file": true,
+    "kept_weights_identical": true,
+    "max_abs_pred_diff_perturbed_vs_original_V": 0.0,
+    "perturbed_run_replay_passed": true,
+    "perturbed_run_replay_steps_failing": 0,
+    "interpretation": "Same kept weights; prediction must be identical although measured test y changed.",
+    "passed": true
+  },
+  "passed": true
+}

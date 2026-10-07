@@ -1,0 +1,12 @@
+Data loaded and centered. Excerpt=4096, train=3072, test=1024, dt=0.00163840419 s; scales sy=0.0530208, sv=1.41938, su=0.0219598, sa=37.9974
+Duffing warm start (physical a,b,c,g)=(1.683437, 8984.894, 1570275, 450.9989)
+Completed rollout stage length=64, updates=12, last_loss=1.91985, elapsed=1.6s
+Completed rollout stage length=256, updates=8, last_loss=1.18539, elapsed=5.8s
+Completed rollout stage length=512, updates=6, last_loss=1.02674, elapsed=12.9s
+Completed rollout stage length=1024, updates=4, last_loss=0.953744, elapsed=22.5s
+Training-only continuous-run selection: trained residual Duffing network, train RMSE=0.053476057 V
+Model: 3x64 tanh fully connected residual acceleration network; train-only RMS scaling; trainable Duffing coefficients; AdamW; rollout lengths 64/256/512/1024; RK4 with ZOH input.
+TRAIN_RMSE=0.05646572659
+TEST_RMSE=0.06048733984
+Saved freerun_states.npy, freerun_prediction.npy, final_accel.pt,
+boundary_state.json, and test_measured_vs_predicted.png

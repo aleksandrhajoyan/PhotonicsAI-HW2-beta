@@ -1,0 +1,13 @@
+{
+  "k_3071": [
+    NaN,
+    NaN
+  ],
+  "k_3072": [
+    NaN,
+    NaN
+  ],
+  "state_initialisations": 1,
+  "rk4_steps": 4095,
+  "rk4_u_convention": "zoh"
+}
