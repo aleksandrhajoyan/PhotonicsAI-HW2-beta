@@ -260,3 +260,104 @@ python task6/verify_run.py task6_runs/repro
 LLM outputs vary, so a new run produces a different dialogue and RMSE.
 `verify_run.py` re-runs the kept script twice (check D), which reproduces the
 recorded prediction exactly because the scripts fix all seeds and use one thread.
+
+---
+
+# Homework 2 — Human-in-the-loop agents and LLM-controlled simulated focusing
+
+Homework 2 extends the four-role LangGraph system in `task6/agentic_system.py`
+(orchestrator, scientist, general, executor), which it imports without
+modifying. Code is in `hw2/`, tests in `hw2/tests/`.
+
+## Task 1 — Human-in-the-loop (`hw2/task1_hitl.py`)
+
+- The orchestrator LLM may route to a `human` destination, using real LangGraph
+  `interrupt()` calls. The paused thread resumes on the same `thread_id` with
+  `Command(resume=...)`.
+- The executor's coding tool runs only after a human approves the exact prepared
+  action (`action_id` plus the code's SHA-256). A refused action is never executed,
+  and an approved action runs exactly once.
+- Demonstrations:
+  - `hw2/demo_task1.py`: an ambiguous question, then a clarification.
+  - `hw2/demo_task1_hard.py`: a refusal, then a fresh approval.
+
+## Task 2 — Simulated optical focusing (`hw2/simulated_bench.py`, `hw2/focusing_optimizer.py`, `hw2/focusing_tool.py`, `hw2/task2_agent.py`)
+
+- **Simulated optics, not physical hardware:** laser → binary-amplitude DMD →
+  one fixed complex Gaussian transmission matrix *T* → camera with Poisson shot
+  noise and Gaussian read noise. No hardware driver, camera SDK or DMD driver is
+  used.
+- **Optimizer:** a black-box binary flipping search that uses only camera
+  measurements. Results are the means of independent validation measurements;
+  the noisy search maxima are reported only as biased search values.
+- **Agent tool:** in Task 2 the executor's only tool is the bounded
+  `FocusingSession.call(arguments)`. The executor LLM chooses all 13 experiment
+  settings. There is no code execution, and all experiments of one run share the
+  same medium.
+
+## Requirements and installation
+
+Python 3.12 was used. Install the dependencies listed in `requirements.txt`
+(HW2 uses `langgraph`, `openai`, `numpy` and `matplotlib`):
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## Offline tests (no API key, no network)
+
+```powershell
+python -m unittest discover -s hw2/tests -v
+```
+
+The tests use scripted or fake models and never call the OpenAI API. Run them
+from a git checkout: a few tests check that the HW1 files are unchanged.
+
+## Offline simulated demo (mocked LLM, real simulator)
+
+```powershell
+python -m hw2.task2_agent --offline-demo
+```
+
+The LLM replies are scripted and clearly labelled as mocked; all measured values
+come from the real simulated focusing tool.
+
+## Real LLM demos (paid OpenAI API calls)
+
+Set `OPENAI_API_KEY` in your shell environment; never put it in a file or in
+this repository:
+
+```powershell
+$env:OPENAI_API_KEY = "<your key>"
+python -m hw2.demo_task2_live --model gpt-6-luna --max-api-calls 30
+python -m hw2.demo_task1
+python -m hw2.demo_task1_hard --data <path to SNLS80mV.mat>
+```
+
+- `demo_task2_live` is bounded:
+  - session: 16×16 DMD, 32×32 camera, medium seed 7;
+  - at most 3 completed experiments and 4000 camera acquisitions;
+  - at most 8 orchestrator decisions and the `--max-api-calls` cap.
+- **Silverbox data:** the Task 1 code-execution demo (`demo_task1_hard`) and
+  `python -m hw2.task1_hitl` need the Silverbox benchmark file `SNLS80mV.mat`.
+  It is **not distributed in this repository**; download it from the benchmark
+  source and pass `--data`.
+
+## Where results are stored
+
+Every run writes to a new directory under `task6_runs/`:
+- `hw2_task1_ambiguity_<timestamp>/`
+- `hw2_task1_hard_<timestamp>/`
+- `hw2_task2_live_<timestamp>/`
+- `hw2_task2_offline_<timestamp>/`
+
+These directories contain dialogues, run records, experiment tables and focusing
+artifacts. A run refuses to overwrite an existing non-empty directory.
+`task6_runs/` is git-ignored, so local run evidence is not part of this repository.
+
+## Report and video
+
+The Homework 2 PDF report and the screen recording are submitted separately
+with the homework submission; they are not stored in this repository.
